@@ -25,6 +25,7 @@ public class Input {
 
     /**
      * чтение и уничтожение читателя
+     * ЗАМЕЧАНИЕ: при слиянии с методом creatingReader когда нет файла вылетит ошибка NullPointerException
      * @param br читатель
      * @return что он прочитал
      * @throws IOException отлов ошибок IO
