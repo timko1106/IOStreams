@@ -1,6 +1,5 @@
 package worker;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -74,9 +73,9 @@ public class AddCommandHandler{
         //Первая часть ада
         String[] allFile;
         Object[] all = analyse (sCommand);
-        Integer position = Integer.valueOf((Integer) all[1]);
-        String text = all[0].toString();
-        Boolean doing = Boolean.valueOf((Boolean) all[2]);
+        Integer position = TranslatorForTypes.ObjectToInt(all[1]);
+        String text = TranslatorForTypes.ObjectToString(all[0]);
+        Boolean doing = TranslatorForTypes.ObjectToBoolean(all[2]);
         try {
             allFile = is.ReadAndClose(is.creatingReader(navigation));
         }

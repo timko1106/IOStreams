@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class App{
     private Scanner scanner;
     private AddCommandHandler add;
+    private PrintCommandHandler print;
 
     /**
      * конструктор
@@ -13,6 +14,7 @@ public class App{
     public App(){
         scanner = new Scanner(System.in);
         add = new AddCommandHandler();
+        print = new PrintCommandHandler();
     }
 
     /**
@@ -76,10 +78,10 @@ public class App{
                 System.out.println("deleting");
                 break;
             case ("print"):
-                System.out.println("printing");
+                print.print(navigation, sCommand);
                 break;
             case ("exit"):
-                System.out.println("exiting");
+                System.out.println("Завершение работы......................");
                 break;
             default:
                 System.err.println("ERROR: я не знаю такой команды.");
