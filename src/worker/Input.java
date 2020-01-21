@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class InputStream{
+public class Input {
     /**
      * создатель читателя
      * @param nav путь к файлу
@@ -13,8 +13,14 @@ public class InputStream{
      * @throws FileNotFoundException отлов ошибки FileNotFound
      */
     public BufferedReader creatingReader (String nav) throws FileNotFoundException {
-        BufferedReader br = new BufferedReader(new FileReader(nav));
-        return br;
+        BufferedReader br;
+        try {
+            br = new BufferedReader(new FileReader(nav));
+            return br;
+        }
+        catch (FileNotFoundException e){
+            return null;
+        }
     }
 
     /**

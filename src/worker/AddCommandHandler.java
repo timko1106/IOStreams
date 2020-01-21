@@ -5,15 +5,15 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class AddCommandHandler{
-    private InputStream is;
-    private OutputStream os;
+    private Input is;
+    private Output os;
 
     /**
      * конструктор
      */
     public AddCommandHandler(){
-        is = new InputStream();
-        os = new OutputStream();
+        is = new Input();
+        os = new Output();
     }
 
     /**
@@ -21,7 +21,7 @@ public class AddCommandHandler{
      * @param sCommand команда разделённая сплитом по пробелам
      * @return текст, позицию и правильно ли была введена команда
      */
-    private Object[] analyse (String[] sCommand){//ArrayIndexOutOfBoundsException
+    private Object[] analyse (String[] sCommand){
         Integer position = 0;
         String text = "";
         Boolean good = true;
@@ -47,14 +47,13 @@ public class AddCommandHandler{
     /**
      * метод по добавлению когда файла не существует
      * @param nav путь к файлу
-     * @param sCommand команда разделённая сплитом по пробелам
+     * @param doing работать или не надо (т. е. команда непонятная)
+     * @param position позиция текста
+     * @param text текст
      * @throws IOException отлов ошибок IO
      */
-    private void secondAdd (String nav, String[] sCommand) throws IOException {
-        Object[] all = analyse (sCommand);
-        if (Boolean.valueOf((Boolean) all[2])) {
-            Integer position = Integer.valueOf((Integer) all[1]);
-            String text = all[0].toString();
+    private void secondAdd (String nav, boolean doing, Integer position, String text) throws IOException {
+        if (doing) {
             String texts = "";
             for (int i = 0; i < position; i++) {
                 texts += "\n";
@@ -74,22 +73,23 @@ public class AddCommandHandler{
     public void add (String[] sCommand, String navigation) throws IOException {
         //Первая часть ада
         String[] allFile;
+        Object[] all = analyse (sCommand);
+        Integer position = Integer.valueOf((Integer) all[1]);
+        String text = all[0].toString();
+        Boolean doing = Boolean.valueOf((Boolean) all[2]);
         try {
             allFile = is.ReadAndClose(is.creatingReader(navigation));
         }
-        catch (FileNotFoundException e){
+        catch (NullPointerException e){
             System.err.println("ERROR: файл не найден.");
-            secondAdd (navigation, sCommand);
+            secondAdd (navigation, doing, position, text);
             return;
         }
         catch (IOException e){
             System.err.println("ERROR: ошибка читателя.");
             return;
         }
-        Object[] all = analyse (sCommand);
-        if (Boolean.valueOf((Boolean) all[2])) {
-            Integer position = Integer.valueOf((Integer) all[1]);
-            String text = all[0].toString();
+        if (doing) {
             while (position >= allFile.length) {
                 String[] oldAllFile = allFile;
                 allFile = Arrays.copyOf(oldAllFile, oldAllFile.length + 1);

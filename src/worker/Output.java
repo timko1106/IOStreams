@@ -2,7 +2,7 @@ package worker;
 
 import java.io.*;
 
-public class OutputStream{
+public class Output {
     /**
      * создание писца
      * @param nav путь к файлу
@@ -29,6 +29,7 @@ public class OutputStream{
         for (String txt:text) {
             wr.write(txt+"\n");
         }
+        wr.flush();
         wr.close();
     }
 }
