@@ -92,6 +92,7 @@ public class AddCommandHandler{
             while (position >= allFile.length) {
                 String[] oldAllFile = allFile;
                 allFile = Arrays.copyOf(oldAllFile, oldAllFile.length + 1);
+                allFile[oldAllFile.length] = "";
             }
 
             //вторая часть ада
